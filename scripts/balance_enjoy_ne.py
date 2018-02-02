@@ -4,13 +4,13 @@ import pickle
 
 import numpy as np
 
-import balance_bot_es
+import balance_bot_ne
 
 def main():
     policy_data = pickle.load(open("best.pkl", "rb"))
-    policy = balance_bot_es.NeuralNet.with_dictionary(policy_data)
+    policy = balance_bot_ne.NeuralNet.with_dictionary(policy_data)
 
-    env = balance_bot_es.BalancebotEnvUneven(vdrange=(-1.0, 1.0), render=True)
+    env = balance_bot_ne.BalancebotEnvUneven(vdrange=(-1.0, 1.0), render=True)
 
     while True:
         obs = env.reset()

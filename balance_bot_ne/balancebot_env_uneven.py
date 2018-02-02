@@ -8,7 +8,7 @@ import numpy as np
 import pybullet as p
 from gym import spaces
 
-from balance_bot_es.balancebot_env_noise import BalancebotEnvNoise
+from balance_bot_ne.balancebot_env_noise import BalancebotEnvNoise
 
 logger = logging.getLogger(__name__)
 

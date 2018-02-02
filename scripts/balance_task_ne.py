@@ -1,9 +1,9 @@
-import balance_bot_es
+import balance_bot_ne
 
 EVAL = 6
-env = balance_bot_es.BalancebotEnvUneven(render=False)
+env = balance_bot_ne.BalancebotEnvUneven(render=False)
 nn_shape = [env.observation_space_size(), 24, env.action_space_size()]
-nn = balance_bot_es.NeuralNet(nn_shape)
+nn = balance_bot_ne.NeuralNet(nn_shape)
 
 def run_episode(env, policy):
     total_reward = 0
@@ -22,7 +22,7 @@ def evaluate(individual):
     return run_episode(env, nn),
 
 def main():
-    ea = balance_bot_es.EvolAlgorithm(objective_function=evaluate,
+    ea = balance_bot_ne.EvolAlgorithm(objective_function=evaluate,
                                       param_size=nn.parameter_size(),
                                       pop_size=200)
     ea.run(50)

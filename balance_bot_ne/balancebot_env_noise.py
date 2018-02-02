@@ -3,7 +3,7 @@ import numpy as np
 
 import pybullet as p
 
-from balance_bot_es.balancebot_env import BalancebotEnv
+from balance_bot_ne.balancebot_env import BalancebotEnv
 
 logger = logging.getLogger(__name__)
 
