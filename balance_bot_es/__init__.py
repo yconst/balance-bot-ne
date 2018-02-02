@@ -2,3 +2,4 @@ from balance_bot_es.balancebot_env import BalancebotEnv
 from balance_bot_es.balancebot_env_noise import BalancebotEnvNoise
 from balance_bot_es.balancebot_env_uneven import BalancebotEnvUneven
 from balance_bot_es.nn import NeuralNet
+from balance_bot_es.ea import EvolAlgorithm
