@@ -85,7 +85,7 @@ class BalancebotEnv():
         return np.array([cubeEuler[0],angular[0],self.vt])
 
     def _compute_reward(self):
-        return 0.1 - abs(self.vt - self.vd) * 0.005
+        return 0.1 - abs(self.vt - self.vd) * 0.01
 
     def _compute_done(self):
         cubePos, cubeOrn = p.getBasePositionAndOrientation(self.botId)

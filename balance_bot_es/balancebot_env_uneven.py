@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 class BalancebotEnvUneven(BalancebotEnvNoise):
 
-    def __init__(self, render=False):
+    def __init__(self, vdrange=(-1, 1), render=False):
 
         super(BalancebotEnvUneven, self).__init__(render=render)
 
@@ -25,6 +25,7 @@ class BalancebotEnvUneven(BalancebotEnvNoise):
                                   np.array([math.pi, math.pi,
                                             math.pi, math.pi, 
                                             5, 5])]
+        self.vdrange = vdrange
 
     def _load_geometry(self):
         shiftX = np.random.uniform(-0.5,0.5)
@@ -59,10 +60,10 @@ class BalancebotEnvUneven(BalancebotEnvNoise):
     def reset(self):
         self.pitch_offset = np.random.normal(0,0.1)
         super(BalancebotEnvNoise, self).reset()
-        self.vd = random.uniform(-2, 2) # need to assign AFTER call to super
+        self.vd = random.uniform(*(self.vdrange)) # need to assign AFTER call to super
         return self._compute_observation() # call to update obs according to new vd
 
     def step(self, action):
-        if random.random() < 0.02:
-            self.vd = random.uniform(-2, 2)
+        if random.random() < 0.01:
+            self.vd = random.uniform(*(self.vdrange))
         return super(BalancebotEnvNoise, self).step(action)
