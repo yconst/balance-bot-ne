@@ -11,11 +11,12 @@ class EvolAlgorithm():
     '''
     Simple elitist genetic algorithm for optimizing the balancing bot network
     '''
-    def __init__(self, objective_function, pop_size=200):
+    def __init__(self, objective_function, param_size = 10, pop_size=200):
         self.checkpoint_frequency = 5
         self.p_xo = 0.95
         self.p_mt = 0.2
         self.objective_function = objective_function
+        self.param_size = param_size
         self.pop_size = pop_size
 
         creator.create("FitnessMax", base.Fitness, weights=(1.0,))
@@ -24,7 +25,7 @@ class EvolAlgorithm():
         self.toolbox = base.Toolbox()
         self.toolbox.register("attribute", scale_random)
         self.toolbox.register("individual", tools.initRepeat, creator.Individual,
-                         self.toolbox.attribute, n=nn.parameter_size())
+                         self.toolbox.attribute, n=self.param_size)
         self.toolbox.register("population", tools.initRepeat, list, self.toolbox.individual)
         self.toolbox.register("mate", tools.cxTwoPoint)
         self.toolbox.register("mutate", tools.mutGaussian, mu=0, sigma=1, indpb=0.1)
@@ -40,19 +41,19 @@ class EvolAlgorithm():
         self.reset()
     
     def reset(self):
-        pop = self.toolbox.population(n=self.pop_size)
+        self.pop = self.toolbox.population(n=self.pop_size)
         self.best = None
 
     def run(self, ngen):
         # Evaluate the entire population
-        fitnesses = map(self.toolbox.evaluate, pop)
-        for ind, fit in zip(pop, fitnesses):
+        fitnesses = map(self.toolbox.evaluate, self.pop)
+        for ind, fit in zip(self.pop, fitnesses):
             ind.fitness.values = fit
 
         for g in range(ngen):
             start = time.time()
             # Select the next generation individuals
-            offspring = self.toolbox.select(pop, len(pop))
+            offspring = self.toolbox.select(self.pop, len(self.pop))
             # Clone the selected individuals
             offspring = list(map(self.toolbox.clone, offspring))
 
@@ -75,17 +76,17 @@ class EvolAlgorithm():
                 ind.fitness.values = fit
 
             # The population is entirely replaced by the offspring
-            pop[:] = tools.selBest(offspring+pop, len(pop))
+            self.pop[:] = tools.selBest(offspring+self.pop, len(self.pop))
 
             dt = time.time() - start
 
-            self.halloffame.update(pop)
-            record = self.stats.compile(pop)
+            self.halloffame.update(self.pop)
+            record = self.stats.compile(self.pop)
             self.logbook.record(gen=g, evals=len(invalid_ind), **record)
 
-            if g % checkpoint_frequency == 0 and g > 0:
+            if g % self.checkpoint_frequency == 0 and g > 0:
                 print("Saving checkpoint...")
-                cp = dict(population=pop, generation=g, halloffame=self.halloffame,
+                cp = dict(population=self.pop, generation=g, halloffame=self.halloffame,
                           logbook=self.logbook, rndstate=random.getstate())
 
                 with open("checkpoint.pkl", "wb") as cp_file:
@@ -95,7 +96,7 @@ class EvolAlgorithm():
             mx = record["max"]
 
             print("Generation {0}, mean fitness is {1:.5f}, max fitness is \
-                   {2:.5f}. Finished in {3:.2f} sec".format(g, mu, mx, dt))
+{2:.5f}. Finished in {3:.2f} sec".format(g, mu, mx, dt))
 
         self.best = self.halloffame[0]
 
