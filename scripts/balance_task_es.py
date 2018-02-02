@@ -22,8 +22,10 @@ def evaluate(individual):
     return run_episode(env, nn),
 
 def main():
-    ea = balance_bot_es.EvolAlgorithm(objective_function=evaluate, pop_size=200)
-    ea.run()
+    ea = balance_bot_es.EvolAlgorithm(objective_function=evaluate,
+                                      param_size=nn.parameter_size(),
+                                      pop_size=200)
+    ea.run(50)
     best = ea.best
 
     print("Saving best individual with fitness {0:.5f}".format(best.fitness.values[0]))
