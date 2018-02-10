@@ -18,9 +18,12 @@ def main():
         total_reward = 0
 
         while not done:
+            start = time.time()
             obs, reward, done = env.step(policy.forward(obs)[0])
             total_reward += reward
-            time.sleep(0.005)
+            diff = time.time() - start
+            if diff > 0:
+                time.sleep(diff)
 
 if __name__ == "__main__":
     main()
