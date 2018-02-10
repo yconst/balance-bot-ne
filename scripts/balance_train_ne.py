@@ -1,3 +1,5 @@
+import pickle
+
 import balance_bot_ne
 
 EVAL = 6
