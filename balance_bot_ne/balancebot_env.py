@@ -85,12 +85,12 @@ class BalancebotEnv():
         return np.array([cubeEuler[0],angular[0],self.vt])
 
     def _compute_reward(self):
-        return 0.1 - abs(self.vt - self.vd) * 0.01
+        return 0.1 - abs(self.vt - self.vd) * 0.005
 
     def _compute_done(self):
         cubePos, cubeOrn = p.getBasePositionAndOrientation(self.botId)
         cubeEuler = p.getEulerFromQuaternion(cubeOrn)
-        return abs(cubeEuler[0]) > math.pi/2 or cubePos[2] < -1 or self._envStepCounter >= 1000
+        return abs(cubeEuler[0]) > 0.8 * math.pi/2 or cubePos[2] < -1 or self._envStepCounter >= 1000
 
 def clamp(n, minn, maxn):
     return max(min(maxn, n), minn)
