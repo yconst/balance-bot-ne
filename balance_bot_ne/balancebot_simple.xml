@@ -33,14 +33,14 @@
   <link name="l_wheel">
     <visual>
       <geometry>
-        <cylinder length="0.02" radius="0.1"/>
+        <mesh filename="wheel.obj"/>
       </geometry>
       <origin rpy="0 1.5707963 0" xyz="0 0 0"/>
       <material name="black"/>
     </visual>
     <collision>
       <geometry>
-        <cylinder length="0.02" radius="0.1"/>
+        <mesh filename="wheel.obj"/>
       </geometry>
       <origin rpy="0 1.5707963 0" xyz="0 0 0"/>
       <contact_coefficients mu="0.8" />
@@ -55,14 +55,14 @@
   <link name="r_wheel">
     <visual>
       <geometry>
-        <cylinder length="0.02" radius="0.1"/>
+        <mesh filename="wheel.obj"/>
       </geometry>
       <origin rpy="0 1.5707963 0" xyz="0 0 0"/>
       <material name="black"/>
     </visual>
     <collision>
       <geometry>
-        <cylinder length="0.02" radius="0.1"/>
+        <mesh filename="wheel.obj"/>
       </geometry>
       <origin rpy="0 1.5707963 0" xyz="0 0 0"/>
       <contact_coefficients mu="0.8" />
