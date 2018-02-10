@@ -3,3 +3,5 @@
 *.egg-info
 *.pkl
 *.p
+*.3dm
+
